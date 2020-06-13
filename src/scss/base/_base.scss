@@ -1,0 +1,17 @@
+.emails-input-lib {
+  background: $background;
+  color: $text;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  box-shadow: $boxShadow;
+  line-height: 171%;
+
+  button {
+    border: 0;
+    font-size: 14px;
+    line-height: 171%;
+    outline: none;
+    cursor: pointer;
+  }
+}
