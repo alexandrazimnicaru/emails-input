@@ -1,50 +1,58 @@
 .emails-input-lib {
-  ul {
+  &__main {
     margin: 24px 50px;
     padding: 8px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
     height: 96px;
-    box-sizing: border-box;
     background: white;
     border: 1px solid #C3C2CF;
     border-radius: 4px;
+    overflow: auto;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    box-sizing: border-box;
     list-style-type: none;
-    overflow: scroll;
+  }
 
-    li {
-      margin-right: 10px;
-      display: inline-flex;
-      border-bottom: 1px dashed $error;
+  &__input-item {
+    flex: auto;
+  }
 
-      &.is-valid {
-        padding: 0 10px;;
-        background: $blockBackground;
-        border-radius: 100px;
-        border-bottom: 0;
-      }
+  &__input {
+    padding: 0;
+    border: 0;
+    font-size: 14px;
+    outline: none;
+  }
 
-      button {
-        margin-left: 6px;
-        padding: 0;
-        width: 8px;
-        background: transparent;
-        line-height: 0.5;
+  &__block {
+    margin: 0 10px 5px 0;
+    display: inline-flex;
+    border-bottom: 1px dashed $error;
 
-        svg {
-          /* ensure svg will never be the target of mouse event */
-          pointer-events: none;
-        }
-      }
+    &.is-valid {
+      padding: 0 10px;;
+      background: $blockBackground;
+      border-radius: 100px;
+      border-bottom: 0;
     }
+  }
 
-    input {
-      padding: 0;
-      flex: auto;
-      border: 0;
-      font-size: 14px;
-      outline: none;
+  &__btn--block {
+    margin-left: 6px;
+    padding: 0;
+    width: 8px;
+    background: transparent;
+    line-height: 0.5;
+
+    svg {
+      /* ensure svg will never be the target of mouse event */
+      pointer-events: none;
     }
   }
 }

@@ -1,52 +1,42 @@
 # Email Editor
 
-## Install
+The emails input library creates a list of emails.
 
-Please make sure you're using node 10 or above.
+It adds an email when the user presses enter, types a separating comma or blurs the input field. It can also add multiple emails, when pasting a comma separated list into the input field. It removes individual emails when clicking on their remove icon.
 
-The project has 2 index.html files:
-- the one inside src is used for development
-- the outside src is used to demonstrate how the lib can be used in a different project, so it's loading the css & js inside the dist folder
+In addition, the library validates the input values and offers a button to count the number of valid emails.
 
-What I still need to do:
-- Test in Edge & IE11
-- Posibly use BEM for css instead of HTML tags as better selector performance
-- Figure out how to load the CSS from inside lib instead of having to add it in a different project's html
+It also offers a button to add a randomly generated email.
 
-```
-yarn install
-```
-or
-```
-npm install
-```
+## Installation
 
-## Run
+I need to maybe make a package to install.
+
+## Usage
+Load the index.js from the dist folder into your project. This will make ```EmailsInput``` globally available.
+
+To use it simply call ```EmailsInput``` on an HTML element like in the example bellow:
 
 ```
-yarn start
-```
-or
-```
-npm start
+<script>
+var exampleEl = document.getElementById('emails-input');
+
+var exampleEmailsInput = EmailsInput(exampleEl);
+</script>
 ```
 
-## Test
+To make the lib styles available, load the index.css from the dist folder into your project.
 
-```
-yarn test
-```
-or
-```
-npm test
-```
+## Development
 
-## Lint
+Please make sure you're using node 10 or above. Simply run ```yarn install``` or ```npm install``` in the root library folder.
 
-```
-yarn lint
-```
-or
-```
-npm run lint
-```
+You can then run the project with ```yarn start``` or ```npm start```.
+
+## Testing
+
+Run ```yarn test``` or ```npm test```.
+
+## Linting
+
+Run ```yarn lint``` or ```npm run lint```.

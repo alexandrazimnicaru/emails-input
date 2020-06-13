@@ -1,9 +1,14 @@
 import { parseEmail } from '../helpers/parse';
 import { Email, EmailList } from '../helpers/types';
+import { CSS_PREFIX } from '../helpers/constants';
 
 const ENTER_KEY = 13;
 const COMMA_KEY = 188;
 const SVG = '<svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0.8L7.2 0L4 3.2L0.8 0L0 0.8L3.2 4L0 7.2L0.8 8L4 4.8L7.2 8L8 7.2L4.8 4L8 0.8Z" fill="#050038"/></svg>'
+const REMOVE_TITLE = `<span class="sr-only">Remove email</span>`;
+
+// cover IE11 lack of support for target.matches
+const matchesEl = (target, el) => target.matches ? target.matches(el) : target.msMatchesSelector(el);
 
 const EmailsList = (): EmailList => {
   let validEmailsNo = 0;
@@ -13,14 +18,23 @@ const EmailsList = (): EmailList => {
 
   const getEmailBlock = ({ text, isValid }): HTMLElement => {
     const li = document.createElement('li');
+    li.classList.add(`${CSS_PREFIX}__block`);
+
     if (isValid) {
       li.classList.add('is-valid');
     }
-    li.innerHTML = `${text} <button data-email="${text}" ${isValid ? 'data-valid="true"' : ''}><span class="sr-only">Remove email</span>${SVG}</button>`;
+
+    // add email block with remove button
+    // data-email is used to trigger the remove action when the click target is the button
+    // data-valid is used to determine on removal whether validEmailsNo should be decreased
+    li.innerHTML = `${text} <button class="${CSS_PREFIX}__btn ${CSS_PREFIX}__btn--block" data-email="${text}" ${isValid ? 'data-valid="true"' : ''}>
+        ${REMOVE_TITLE} ${SVG}
+      </button>`;
     return li;
   };
 
   const renderEmailBlock = (block) => {
+    // get the last list element which is always the input, to insert blocks before it
     const lastBlock = listEl.childNodes.length - 1;
     listEl.insertBefore(block, listEl.childNodes[lastBlock]);
   };
@@ -39,16 +53,19 @@ const EmailsList = (): EmailList => {
   };
 
   const remove = ({ target }) => {
-    if (target.matches('button')) {
+    // trigger the removal only for remove buttons targets, identified by data-email
+    if (matchesEl(target, 'button')) {
       const hasEmail = target.getAttribute('data-email');
       if (!hasEmail) {
         return;
       }
 
+      // use data-valid set on block rendering to update the validEmailsNo
       if (target.getAttribute('data-valid')) {
         validEmailsNo && validEmailsNo--;
       }
 
+      // remove block
       const emailElToRemove = target.parentNode;
       emailElToRemove.parentNode.removeChild(emailElToRemove);
     }
@@ -73,6 +90,7 @@ const EmailsList = (): EmailList => {
     }
 
     add(target.value);
+    // clear input after adding it
     (<HTMLInputElement>target).value = '';
   }
 
@@ -103,6 +121,8 @@ const EmailsList = (): EmailList => {
     if (!pastedText) {
       return;
     }
+
+    // parse and render multiple emails at once as it's more efficient
     const emails = pastedText.split(',').map((email) => {
       const parsed = parseEmail(email);
       if (parsed.isValid) {
@@ -110,12 +130,13 @@ const EmailsList = (): EmailList => {
       }
       return parsed;
     });
-
     renderMultipleEmailBlocks(emails);
   };
 
   const renderInput = (): HTMLInputElement => {
     const input: HTMLInputElement = document.createElement('input');
+    input.classList.add(`${CSS_PREFIX}__input`);
+
     input.type = 'text';
     input.placeholder = 'add more people...';
     input.autocomplete = 'off';
@@ -129,10 +150,17 @@ const EmailsList = (): EmailList => {
     return input;
   }
 
-  const render = (): HTMLElement => {   
-    // add email blocks list with event listener
+  const render = (): HTMLElement => {
+    listEl.classList.add(`${CSS_PREFIX}__list`);
+
+    // add remove listener on entire list to avoid separate listeners on each item
     listEl.addEventListener('click', remove);
-    listEl.appendChild(renderInput());
+
+    // add input as list element, all email blocks will be inserted before it
+    const li = document.createElement('li');
+    li.classList.add(`${CSS_PREFIX}__input-item`)
+    li.appendChild(renderInput());
+    listEl.appendChild(li);
 
     return listEl;
   };

@@ -1,21 +1,22 @@
 .emails-input-lib {
-  footer {
+  &__footer {
     padding: 24px 50px 32px;
     background: white;
     border-radius: 0 0 8px 8px;
+  }
 
-    button {
-      margin: 0 16px 5px 0;
-      padding: 8px 16px;
-      background: $buttonBackground;
-      color: white;
-      border-radius: 6px;
+  &__btn--add,
+  &__btn--count {
+    margin: 0 16px 5px 0;
+    padding: 8px 16px;
+    background: $buttonBackground;
+    color: white;
+    border-radius: 6px;
 
-      &:hover,
-      &:visited,
-      &:active {
-        background: #455bed;
-      }
+    &:hover,
+    &:visited,
+    &:active {
+      background: #455bed;
     }
   }
 }

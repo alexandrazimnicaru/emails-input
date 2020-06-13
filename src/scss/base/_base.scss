@@ -7,11 +7,23 @@
   box-shadow: $boxShadow;
   line-height: 171%;
 
-  button {
+  &__btn {
     border: 0;
     font-size: 14px;
     line-height: 171%;
     outline: none;
     cursor: pointer;
+  }
+
+  ::-webkit-input-placeholder { /* Edge */
+    color: $placeholder;
+  }
+  
+  :-ms-input-placeholder { /* IE 11 */
+    color: $placeholder;
+  }
+  
+  ::placeholder {
+    color: $placeholder;
   }
 }
