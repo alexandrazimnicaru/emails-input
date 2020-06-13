@@ -10,10 +10,14 @@ It also offers a button to add a randomly generated email.
 
 ## Installation
 
-I need to maybe make a package to install.
+Please make sure you're using node 10 or above. Simply run ```yarn install``` or ```npm install``` in the root library folder.
+
+You can then run the project with ```yarn start``` or ```npm start```.
 
 ## Usage
-Load the index.js from the dist folder into your project. This will make ```EmailsInput``` globally available.
+The index.html file in the root folder serves as an example of how to include the library in a project.
+
+Load the index.js file from the dist folder into your project. This will make ```EmailsInput``` globally available.
 
 To use it simply call ```EmailsInput``` on an HTML element like in the example bellow:
 
@@ -25,13 +29,7 @@ var exampleEmailsInput = EmailsInput(exampleEl);
 </script>
 ```
 
-To make the lib styles available, load the index.css from the dist folder into your project.
-
-## Development
-
-Please make sure you're using node 10 or above. Simply run ```yarn install``` or ```npm install``` in the root library folder.
-
-You can then run the project with ```yarn start``` or ```npm start```.
+To make the lib styles available, load the index.css file from the dist folder into your project.
 
 ## Testing
 
