@@ -1,7 +1,7 @@
 import EmailsInput from '../src/components/EmailsInput';
 import { mockInputEvent } from './helpers';
 
-describe('Emails container', function() {
+describe('Emails input', function() {
   let dummyElement;
   let container;
 

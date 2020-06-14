@@ -1,10 +1,11 @@
 import EmailsList from '../src/components/EmailsList';
+import EmailsCounter from '../src/components/EmailsCounter';
 import { mockInputEvent, mockInputPasteEvent } from './helpers';
 
 let container;
 
 beforeEach(() => {
-  container = EmailsList().render();
+  container = EmailsList(EmailsCounter()).render();
 });
 
 describe('Emails list', function() {

@@ -1,5 +1,5 @@
 import { parseEmail } from '../helpers/parse';
-import { Email, EmailList } from '../helpers/types';
+import { Email, EmailListComponent, EmailsCounterComponent } from '../helpers/types';
 import { CSS_PREFIX } from '../helpers/constants';
 
 const ENTER_KEY = 13;
@@ -10,11 +10,8 @@ const REMOVE_TITLE = `<span class="sr-only">Remove email</span>`;
 // cover IE11 lack of support for target.matches
 const matchesEl = (target, el) => target.matches ? target.matches(el) : target.msMatchesSelector(el);
 
-const EmailsList = (): EmailList => {
-  let validEmailsNo = 0;
+const EmailsList = (counter: EmailsCounterComponent): EmailListComponent => {
   const listEl = document.createElement('ul');
-
-  const getCountValidEmails = (): number => validEmailsNo;
 
   const getEmailBlock = ({ text, isValid }): HTMLElement => {
     const li = document.createElement('li');
@@ -50,6 +47,9 @@ const EmailsList = (): EmailList => {
       if (!email.text) {
         return;
       }
+
+      counter.increase(email.isValid);
+
       fragment.appendChild(getEmailBlock(email));
     })
 
@@ -65,9 +65,7 @@ const EmailsList = (): EmailList => {
       }
 
       // use data-valid set on block rendering to update the validEmailsNo
-      if (target.getAttribute('data-valid')) {
-        validEmailsNo && validEmailsNo--;
-      }
+      counter.decrease(target.getAttribute('data-valid'));
 
       // remove block
       const emailElToRemove = target.parentNode;
@@ -81,9 +79,7 @@ const EmailsList = (): EmailList => {
       return;
     }
 
-    if (email.isValid) {
-      validEmailsNo++;
-    }
+    counter.increase(email.isValid);
 
     renderEmailBlock(getEmailBlock(email));
   };
@@ -127,13 +123,7 @@ const EmailsList = (): EmailList => {
     }
 
     // parse and render multiple emails at once as it's more efficient
-    const emails = pastedText.split(',').map((email) => {
-      const parsed = parseEmail(email);
-      if (parsed.isValid) {
-        validEmailsNo++;
-      }
-      return parsed;
-    });
+    const emails = pastedText.split(',').map((email) => parseEmail(email));
     renderMultipleEmailBlocks(emails);
   };
 
@@ -171,7 +161,6 @@ const EmailsList = (): EmailList => {
 
   return {
     add,
-    getCountValidEmails,
     render
   }
 };

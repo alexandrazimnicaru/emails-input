@@ -1,16 +1,18 @@
 import EmailsList from './EmailsList';
-import { EmailList } from '../helpers/types';
+import EmailsCounter from './EmailsCounter';
+import { EmailListComponent, EmailsCounterComponent } from '../helpers/types';
 import { CSS_PREFIX } from '../helpers/constants';
 
 const EmailsInput = (container: HTMLElement): HTMLElement => {
-  const emailList: EmailList = EmailsList();
+  const counter: EmailsCounterComponent = EmailsCounter();
+  const emailList: EmailListComponent = EmailsList(counter);
 
   const addRandom = () => {
     emailList.add(`email_${Date.now()}@email.com`);
   };
 
   const alertCount = () => {
-    const count = emailList.getCountValidEmails();
+    const count = counter.getCountValidEmails();
     const message = count === 1 ? `There is currently 1 valid email` : `There are currently ${count} valid emails`;
     alert(message);
   };

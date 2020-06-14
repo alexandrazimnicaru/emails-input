@@ -3,8 +3,13 @@ export interface Email {
   isValid: boolean;
 }
 
-export interface EmailList {
+export interface EmailListComponent {
   add(value: string): void;
-  getCountValidEmails(): number;
   render(): HTMLElement;
+}
+
+export interface EmailsCounterComponent {
+  getCountValidEmails(): number;
+  increase(isValid: boolean): void;
+  decrease(isValid: boolean): void;
 }
