@@ -30,6 +30,12 @@
     border: 0;
     font-size: 14px;
     outline: none;
+
+    // disable ms clear input icon as it can
+    // be confused with the email block remove icon
+    &::-ms-clear {
+      display: none;
+    }
   }
 
   &__block {
