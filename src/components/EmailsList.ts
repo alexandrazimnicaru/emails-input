@@ -24,10 +24,14 @@ const EmailsList = (): EmailList => {
       li.classList.add('is-valid');
     }
 
-    // add email block with remove button
+    // turn input value into text node just to make sure it's filtered
+    const textEl = document.createTextNode(text);
+    li.appendChild(textEl);
+
+    // add remove button with data email & data-valid (if valid)
     // data-email is used to trigger the remove action when the click target is the button
     // data-valid is used to determine on removal whether validEmailsNo should be decreased
-    li.innerHTML = `${text} <button class="${CSS_PREFIX}__btn ${CSS_PREFIX}__btn--block" data-email="${text}" ${isValid ? 'data-valid="true"' : ''}>
+    li.innerHTML += `<button class="${CSS_PREFIX}__btn ${CSS_PREFIX}__btn--block" data-email="${text}" ${isValid ? 'data-valid="true"' : ''}>
         ${REMOVE_TITLE} ${SVG}
       </button>`;
     return li;
