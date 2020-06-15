@@ -21,14 +21,15 @@ const EmailsList = (counter: EmailsCounterComponent): EmailListComponent => {
       li.classList.add('is-valid');
     }
 
-    // turn input value into text node just to make sure it's filtered
+    // turn input value into text node & filter any html tags just in case html is pasted
     const textEl = document.createTextNode(text);
+    const dataEmail = text.replace(/(<([^>]+)>)/ig, '');
     li.appendChild(textEl);
 
-    // add remove button with data email & data-valid (if valid)
+    // add remove button with data email & data valid (if valid)
     // data-email is used to trigger the remove action when the click target is the button
-    // data-valid is used to determine on removal whether validEmailsNo should be decreased
-    li.innerHTML += `<button class="${CSS_PREFIX}__btn ${CSS_PREFIX}__btn--block" data-email="${text}" ${isValid ? 'data-valid="true"' : ''}>
+    // data-valid is used to determine on removal whether the counter of valid emails should be decreased
+    li.innerHTML += `<button class="${CSS_PREFIX}__btn ${CSS_PREFIX}__btn--block" data-email="${dataEmail || false}" ${isValid ? 'data-valid="true"' : ''}>
         ${REMOVE_TITLE} ${SVG}
       </button>`;
     return li;
