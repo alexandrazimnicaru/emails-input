@@ -57,7 +57,6 @@ const EmailsInput = (container: HTMLElement): HTMLElement => {
   };
 
   const render = () => {
-    const fragment = document.createDocumentFragment();
     const article = document.createElement('article');
     article.classList.add(CSS_PREFIX);
 
@@ -74,8 +73,7 @@ const EmailsInput = (container: HTMLElement): HTMLElement => {
     article.appendChild(renderFooter());
 
     // add to DOM
-    fragment.appendChild(article);
-    container.appendChild(fragment);
+    container.appendChild(article);
   };
 
   // initialize component by rendering it 
